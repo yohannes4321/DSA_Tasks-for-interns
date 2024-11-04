@@ -33,7 +33,7 @@ class Graph:
         while queue:
             current, path = queue.pop(0)
             if current == goal:
-                print("Path found:", " -> ".join(path))
+                print("Path found (BFS):", " -> ".join(path))
                 return
             if current not in visited:
                 visited.add(current)
@@ -63,18 +63,45 @@ class Graph:
         else:
             print("No path found from", start, "to", goal)
 
-    def dfs_iterative(self, start, goal):
-        stack = [(start, [start])]
-        visited = set()
+    def build_graph_from_edges(self, edge_list):
+        # Parse the edges and add nodes and edges to the graph
+        for line in edge_list:
+            source, destination = line.split(',')
+            self.add_node(source.strip())  # Add source city
+            self.add_node(destination.strip())  # Add destination city
+            self.add_edge(source.strip(), destination.strip())  # Add the edge between them
 
-        while stack:
-            current, path = stack.pop()
-            if current == goal:
-                print("Path found (DFS Iterative):", " -> ".join(path))
-                return
-            if current not in visited:
-                visited.add(current)
-                for neighbor in self.adjacent[current]:
-                    stack.append((neighbor, path + [neighbor]))
+# List of edges as provided
+edge_list = [
+    "New York, Los Angeles",
+    "New York, Chicago",
+    "New York, Houston",
+    "Los Angeles, Chicago",
+    "Los Angeles, Houston",
+    "Chicago, Houston",
+    "San Francisco, Los Angeles",
+    "San Francisco, Chicago",
+    "San Francisco, Houston",
+    "Seattle, Los Angeles",
+    "Seattle, Chicago",
+    "Seattle, Houston",
+    "Boston, Los Angeles",
+    "Boston, Chicago",
+    "Boston, Houston",
+    "Miami, Los Angeles",
+    "Miami, Chicago",
+    "Miami, Houston"
+]
 
-        print("No path found from", start, "to", goal)
+# Create a graph instance
+graph = Graph()
+
+# Build the graph
+graph.build_graph_from_edges(edge_list)
+
+# Print the graph
+graph.print_graph()
+
+# Test BFS and DFS
+graph.bfs("New York", "Houston")
+graph.dfs("New York", "Houston")
