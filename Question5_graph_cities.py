@@ -1,34 +1,41 @@
 import csv
-from collections import defaultdict, deque
+ 
 from io import StringIO
-
+"""
+i have created a graph and to add vertex and add edge remove vertex remove edge finally print the graph and parse the city and print them """
 class Graph:
     def __init__(self):
-        self.adjacency_list = defaultdict(list)
+        self.edge ={}
 
     def add_vertex(self, vertex):
-        if vertex not in self.adjacency_list:
-            self.adjacency_list[vertex] = []
+        # to add vertex which means add vertex if it is not alredy exist and 
+        # and intialize the vertex with empty array 
+        if vertex not in self.edge:
+            self.edge[vertex] = []
 
     def add_edge(self, source, destination):
-        self.adjacency_list[source].append(destination)
-        self.adjacency_list[destination].append(source)
+        # i have used the Adjecent list techinque for graph which is like linkedlist  for each vertex node we can find the neighbour with traverse throw the linkedlist 
+        # if the graph is undirected graph which means no direction is given from the source to destination and destionation to source 
+        # for each node we gona append in self.edge[source] the destination 
+
+        self.edge[source].append(destination)
+        self.edge[destination].append(source)
 
     def remove_vertex(self, vertex):
-        if vertex in self.adjacency_list:
-            del self.adjacency_list[vertex]
-            for neighbors in self.adjacency_list.values():
+        if vertex in self.edge:
+            del self.edge[vertex]
+            for neighbors in self.edge.values():
                 if vertex in neighbors:
                     neighbors.remove(vertex)
 
     def remove_edge(self, source, destination):
-        if source in self.adjacency_list and destination in self.adjacency_list[source]:
-            self.adjacency_list[source].remove(destination)
-        if destination in self.adjacency_list and source in self.adjacency_list[destination]:
-            self.adjacency_list[destination].remove(source)
+        if source in self.edge and destination in self.edge[source]:
+            self.edge[source].remove(destination)
+        if destination in self.edge and source in self.edge[destination]:
+            self.edge[destination].remove(source)
 
     def print_graph(self):
-        for vertex, neighbors in self.adjacency_list.items():
+        for vertex, neighbors in self.edge.items():
             print(f"{vertex} -> {' '.join(neighbors)}")
 
     
