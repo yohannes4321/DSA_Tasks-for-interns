@@ -36,11 +36,11 @@ class Graph:
     # space complexiy O(vertex) because we use queue at worst case size of vertex
     def bfs(self, start_vertex, target_vertex):
         visited = set()# create set to store all tarversed vertex nodes
-        queue = deque([(start_vertex, [start_vertex])]) # use queue 
+        queue = deque([(start_vertex, [start_vertex])]) # The contain the current node being explored  and the path to reach the node intially start vertex
 
         while queue:
             # the iteration will run till the queue is empty 
-            current_vertex, path = queue.popleft()# pop the first element from the queue and 
+            current_vertex, path = queue.popleft()# pop the first element from the queue 
             if current_vertex == target_vertex:
                 print("BFS Path:", " -> ".join(path))
                 return path
@@ -73,10 +73,8 @@ class Graph:
         else:
             print("No path found")
         return path
-""" 
-DFS works first we have hash set visted and all and add the current index inside it 
-if and only if all neighbor of  vertex not in visted set will call callstack of recursive function 
-and in path add it and  current_index not will be neighbour so it will go to neigbour and same loop iterate"""
+    
+
     def dfs(self, current_vertex, target_vertex, visited, path):
         if current_vertex == target_vertex:
             # which is the node  vertex currently visted is target index return path
