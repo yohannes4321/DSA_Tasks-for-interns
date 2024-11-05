@@ -4,32 +4,29 @@ from io import StringIO
 
 class Graph:
     def __init__(self):
-        self.adjacency_list = defaultdict(list)
+        self.edge ={}
 
     def add_vertex(self, vertex):
-        if vertex not in self.adjacency_list:
-            self.adjacency_list[vertex] = []
+        # to add vertex which means add vertex if it is not alredy exist and 
+        # and intialize the vertex with empty array 
+        if vertex not in self.edge:
+            self.edge[vertex] = []
 
-    def add_edge(self, source, destination):
-        self.adjacency_list[source].append(destination)
-        self.adjacency_list[destination].append(source)
+    def add_edge(self, start, end):
+        # i have used the Adjecent list techinque for graph which is like linkedlist  for each vertex node we can find the neighbour with traverse throw the linkedlist 
+        # if the graph is undirected graph which means no direction is given from the source to destination and destionation to source 
+        # for each node we gona append in self.edge[source] the destination 
 
-    def remove_vertex(self, vertex):
-        if vertex in self.adjacency_list:
-            del self.adjacency_list[vertex]
-            for neighbors in self.adjacency_list.values():
-                if vertex in neighbors:
-                    neighbors.remove(vertex)
-
-    def remove_edge(self, source, destination):
-        if source in self.adjacency_list and destination in self.adjacency_list[source]:
-            self.adjacency_list[source].remove(destination)
-        if destination in self.adjacency_list and source in self.adjacency_list[destination]:
-            self.adjacency_list[destination].remove(source)
+        self.edge[start].append(end)
+        self.edge[end].append(start)
+ 
 
     def print_graph(self):
-        for vertex, neighbors in self.adjacency_list.items():
-            print(f"{vertex} -> {' '.join(neighbors)}")
+        # for vertex and all the vertex neighbours 
+        # self.edge is dictonary key is vertex and value is all neighbors of the vetex in list  print them
+        for vertex, neighbors in self.edge.items():
+            print(f"{vertex} -> {', '.join(neighbors)}")
+
 
     # the breadth first search is used to search elements in layer by layer in every step it will cheack all layers 
     # i have used visited  hashset that store alredy used vertex and we will not add them inside the queue and 
@@ -51,7 +48,7 @@ class Graph:
                 # if the current vertex not in visted hashset it will add it because the hashset helps not to traverse the vertex many times we only traverse it once 
 
                 visited.add(current_vertex)
-                for neighbor in self.adjacency_list[current_vertex]:
+                for neighbor in self.edge[current_vertex]:
                     # for current vertex cheack all neighbours and if there are not already in visted hash set will append in queue
                     if neighbor not in visited:
                         queue.append((neighbor, path + [neighbor]))
@@ -68,20 +65,32 @@ class Graph:
     first there is visted hash set it will cheack the """
     def dfs_recursive(self, start_vertex, target_vertex):
         visited = set()
-        path = self._dfs_recursive_helper(start_vertex, target_vertex, visited, [start_vertex])
+        # intiaize visted set not to visiting them   
+        # get the path from dfs and print it
+        path = self.dfs(start_vertex, target_vertex, visited, [start_vertex])
         if path:
-            print("DFS Recursive Path:", " -> ".join(path))
+            print("DFS path:", " -> ".join(path))
         else:
             print("No path found")
         return path
-
-    def _dfs_recursive_helper(self, current_vertex, target_vertex, visited, path):
+""" 
+DFS works first we have hash set visted and all and add the current index inside it 
+if and only if all neighbor of  vertex not in visted set will call callstack of recursive function 
+and in path add it and  current_index not will be neighbour so it will go to neigbour and same loop iterate"""
+    def dfs(self, current_vertex, target_vertex, visited, path):
         if current_vertex == target_vertex:
+            # which is the node  vertex currently visted is target index return path
             return path
-        visited.add(current_vertex)
-        for neighbor in self.adjacency_list[current_vertex]:
+        visited.add(current_vertex)# add to hash set 
+        #
+        # to make current vertex visted
+        for neighbor in self.edge[current_vertex]:
+            # for the vertex it will go to its neigbour all nodes connected to vertex and if they are not in visted set
+            #call recurive function 
             if neighbor not in visited:
-                result_path = self._dfs_recursive_helper(neighbor, target_vertex, visited, path + [neighbor])
+                # path is list of current path from start to current node new list append to path 
+                result_path = self.dfs(neighbor, target_vertex, visited, path + [neighbor])
+
                 if result_path:
                     return result_path
         return None
@@ -107,13 +116,14 @@ Miami,Los Angeles
 Miami,Chicago
 Miami,Houston"""
 
-# Use csv reader to parse the data from a StringIO object
+# read csv file using String0
 csv_data = StringIO(data)
 reader = csv.reader(csv_data)
 next(reader)  # Skip header row
 
-# Create the graph and add vertices and edges
+ 
 graph = Graph()
+ # intialize and add source and diestination 
 
 for row in reader:
     source, destination = row

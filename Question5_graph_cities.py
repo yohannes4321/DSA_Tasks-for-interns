@@ -21,19 +21,7 @@ class Graph:
         self.edge[start].append(end)
         self.edge[end].append(start)
 
-    def remove_vertex(self, vertex):
-        if vertex in self.edge:
-            del self.edge[vertex]
-            for neighbors in self.edge.values():
-                if vertex in neighbors:
-                    neighbors.remove(vertex)
-
-    def remove_edge(self,start, end):
-        if start in self.edge and end in self.edge[start]:
-            self.edge[start].remove(end)
-        if end in self.edge and start in self.edge[end]:
-            self.edge[end].remove(start)
-
+ 
     def print_graph(self):
         # for vertex and all the vertex neighbours 
         # self.edge is dictonary key is vertex and value is all neighbors of the vetex in list  print them
