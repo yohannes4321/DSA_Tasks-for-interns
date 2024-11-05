@@ -34,6 +34,9 @@ class Graph:
     # the breadth first search is used to search elements in layer by layer in every step it will cheack all layers 
     # i have used visited  hashset that store alredy used vertex and we will not add them inside the queue and 
     # when elements add to queue when we pop the first element we cheak if it is in visted hash set if it is we will not serach the neighbour just ignore it 
+    # and run the while loop run till the queue is empty
+    # time complexity O(vertex + edge)
+    # space complexiy O(vertex) because we use queue at worst case size of vertex
     def bfs(self, start_vertex, target_vertex):
         visited = set()
         queue = deque([(start_vertex, [start_vertex])])
