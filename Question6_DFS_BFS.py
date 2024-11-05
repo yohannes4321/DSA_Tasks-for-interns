@@ -31,6 +31,9 @@ class Graph:
         for vertex, neighbors in self.adjacency_list.items():
             print(f"{vertex} -> {' '.join(neighbors)}")
 
+    # the breadth first search is used to search elements in layer by layer in every step it will cheack all layers 
+    # i have used visited  hashset that store alredy used vertex and we will not add them inside the queue and 
+    # when elements add to queue when we pop the first element we cheak if it is in visted hash set if it is we will not serach the neighbour just ignore it 
     def bfs(self, start_vertex, target_vertex):
         visited = set()
         queue = deque([(start_vertex, [start_vertex])])
@@ -48,23 +51,14 @@ class Graph:
         print("No path found")
         return None
 
-    def dfs_iterative(self, start_vertex, target_vertex):
-        visited = set()
-        stack = [(start_vertex, [start_vertex])]
-
-        while stack:
-            current_vertex, path = stack.pop()
-            if current_vertex == target_vertex:
-                print("DFS Iterative Path:", " -> ".join(path))
-                return path
-            if current_vertex not in visited:
-                visited.add(current_vertex)
-                for neighbor in self.adjacency_list[current_vertex]:
-                    if neighbor not in visited:
-                        stack.append((neighbor, path + [neighbor]))
-        print("No path found")
-        return None
-
+  
+    """the idea how the dfs works is  it goes depth 
+    1, there is visted hash set that cheack before the recursive calls  on the vertex it must not be in the visted hash set 
+    2 we gona add the current_vertex into visted hash set so it will for next times we willnot add it in call stack
+    3 
+    2,then we gona call dfs function 
+    
+    first there is visted hash set it will cheack the """
     def dfs_recursive(self, start_vertex, target_vertex):
         visited = set()
         path = self._dfs_recursive_helper(start_vertex, target_vertex, visited, [start_vertex])
@@ -127,11 +121,9 @@ graph.print_graph()
 # Perform BFS and DFS
 start_city = "New York"
 target_city = "San Francisco"
-print("\nBreadth-First Search:")
+print("Breadth-First Search:")
 graph.bfs(start_city, target_city)
 
-print("\nDepth-First Search (Iterative):")
-graph.dfs_iterative(start_city, target_city)
-
-print("\nDepth-First Search (Recursive):")
+ 
+print("Depth-First Search ")
 graph.dfs_recursive(start_city, target_city)

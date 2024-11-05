@@ -61,12 +61,12 @@ Miami,Los Angeles
 Miami,Chicago
 Miami,Houston"""
 
-# Use csv reader to parse the data from a StringIO object
+# csv reader the read 
 csv_data = StringIO(data)
 reader = csv.reader(csv_data)
 next(reader)  # Skip header row
 
-# Create the graph and add vertices and edges
+ 
 graph = Graph()
 
 for row in reader:
