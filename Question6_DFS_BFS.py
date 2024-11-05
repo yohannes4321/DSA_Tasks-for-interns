@@ -38,17 +38,21 @@ class Graph:
     # time complexity O(vertex + edge)
     # space complexiy O(vertex) because we use queue at worst case size of vertex
     def bfs(self, start_vertex, target_vertex):
-        visited = set()
-        queue = deque([(start_vertex, [start_vertex])])
+        visited = set()# create set to store all tarversed vertex nodes
+        queue = deque([(start_vertex, [start_vertex])]) # use queue 
 
         while queue:
-            current_vertex, path = queue.popleft()
+            # the iteration will run till the queue is empty 
+            current_vertex, path = queue.popleft()# pop the first element from the queue and 
             if current_vertex == target_vertex:
                 print("BFS Path:", " -> ".join(path))
                 return path
             if current_vertex not in visited:
+                # if the current vertex not in visted hashset it will add it because the hashset helps not to traverse the vertex many times we only traverse it once 
+
                 visited.add(current_vertex)
                 for neighbor in self.adjacency_list[current_vertex]:
+                    # for current vertex cheack all neighbours and if there are not already in visted hash set will append in queue
                     if neighbor not in visited:
                         queue.append((neighbor, path + [neighbor]))
         print("No path found")
@@ -117,9 +121,7 @@ for row in reader:
     graph.add_vertex(destination)
     graph.add_edge(source, destination)
 
-# Display the graph structure
-print("Graph:")
-graph.print_graph()
+ 
 
 # Perform BFS and DFS
 start_city = "New York"

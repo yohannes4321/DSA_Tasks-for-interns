@@ -13,13 +13,13 @@ class Graph:
         if vertex not in self.edge:
             self.edge[vertex] = []
 
-    def add_edge(self, source, destination):
+    def add_edge(self, start, end):
         # i have used the Adjecent list techinque for graph which is like linkedlist  for each vertex node we can find the neighbour with traverse throw the linkedlist 
         # if the graph is undirected graph which means no direction is given from the source to destination and destionation to source 
         # for each node we gona append in self.edge[source] the destination 
 
-        self.edge[source].append(destination)
-        self.edge[destination].append(source)
+        self.edge[start].append(end)
+        self.edge[end].append(start)
 
     def remove_vertex(self, vertex):
         if vertex in self.edge:
@@ -28,15 +28,17 @@ class Graph:
                 if vertex in neighbors:
                     neighbors.remove(vertex)
 
-    def remove_edge(self, source, destination):
-        if source in self.edge and destination in self.edge[source]:
-            self.edge[source].remove(destination)
-        if destination in self.edge and source in self.edge[destination]:
-            self.edge[destination].remove(source)
+    def remove_edge(self,start, end):
+        if start in self.edge and end in self.edge[start]:
+            self.edge[start].remove(end)
+        if end in self.edge and start in self.edge[end]:
+            self.edge[end].remove(start)
 
     def print_graph(self):
+        # for vertex and all the vertex neighbours 
+        # self.edge is dictonary key is vertex and value is all neighbors of the vetex in list  print them
         for vertex, neighbors in self.edge.items():
-            print(f"{vertex} -> {' '.join(neighbors)}")
+            print(f"{vertex} -> {', '.join(neighbors)}")
 
     
 
