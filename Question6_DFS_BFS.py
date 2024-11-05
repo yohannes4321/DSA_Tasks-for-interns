@@ -2,7 +2,7 @@ import csv
 from collections import defaultdict, deque
 from io import StringIO
 
-class AdjacencyListGraph:
+class Graph:
     def __init__(self):
         self.adjacency_list = defaultdict(list)
 
@@ -112,7 +112,7 @@ reader = csv.reader(csv_data)
 next(reader)  # Skip header row
 
 # Create the graph and add vertices and edges
-graph = AdjacencyListGraph()
+graph = Graph()
 
 for row in reader:
     source, destination = row
